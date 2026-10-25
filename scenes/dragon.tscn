@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://ciomhu3lrqprs"]
+
+[ext_resource type="Texture2D" uid="uid://c6f48l3gbty48" path="res://assets/sprites/dragon.png" id="1_5q8uj"]
+[ext_resource type="Script" uid="uid://ev535rvvagjv" path="res://scripts/dragon.gd" id="2_lmr38"]
+
+[node name="Node2D" type="Node2D" unique_id=1130387073]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1563637091]
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D" unique_id=141511673]
+texture = ExtResource("1_5q8uj")
+vframes = 2
+script = ExtResource("2_lmr38")

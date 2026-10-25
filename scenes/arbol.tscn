@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://8l8rs8fx6mho"]
+
+[ext_resource type="Texture2D" uid="uid://ksuqvlb530yt" path="res://assets/sprites/arbol.png" id="1_ut0oq"]
+[ext_resource type="Script" uid="uid://c57diptpttn78" path="res://scripts/arbol.gd" id="2_25kfi"]
+
+[node name="Node2D" type="Node2D" unique_id=2096957102]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1577200357]
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D" unique_id=1932054836]
+position = Vector2(63.999996, 30.000023)
+scale = Vector2(0.14871652, 0.13754006)
+texture = ExtResource("1_ut0oq")
+script = ExtResource("2_25kfi")
