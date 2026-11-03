@@ -1,24 +1,96 @@
-[gd_scene format=3 uid="uid://caur8xau1pi4"]
+[gd_scene format=3]
 
-[ext_resource type="Texture2D" uid="uid://btugli4k7y8fw" path="res://assets/sprites/BODY_skeleton.png" id="1_o5qli"]
-[ext_resource type="Script" uid="uid://7uk8iq1c4kdf" path="res://scripts/main.gd" id="2_sugp2"]
-[ext_resource type="PackedScene" path="res://scenes/dragon.tscn" id="3_jyhfs"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="PackedScene" path="res://scenes/dragon.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/arbol.tscn" id="3_tree"]
 
-[node name="Main" type="Node2D" unique_id=602717988]
-script = ExtResource("2_sugp2")
+[node name="Main" type="Node2D"]
+script = ExtResource("1_main")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=221671436]
+[node name="Background" type="ColorRect" parent="."]
+z_index = -10
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+color = Color(0.035, 0.105, 0.09, 1)
 
-[node name="Sprite2D" type="Sprite2D" parent="Camera2D" unique_id=205168781]
-texture = ExtResource("1_o5qli")
-hframes = 9
-vframes = 4
-frame = 22
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+position_smoothing_speed = 6.0
+enabled = true
 
-[node name="RoundTimer" type="Timer" parent="." unique_id=922207292]
-wait_time = 10.0
+[node name="Trees" type="Node2D" parent="."]
+
+[node name="Arbol1" parent="Trees" instance=ExtResource("3_tree")]
+position = Vector2(-390, -145)
+
+[node name="Arbol2" parent="Trees" instance=ExtResource("3_tree")]
+position = Vector2(390, -145)
+
+[node name="Arbol3" parent="Trees" instance=ExtResource("3_tree")]
+position = Vector2(0, 195)
+
+[node name="RoundTimer" type="Timer" parent="."]
+wait_time = 60.0
 one_shot = true
-autostart = true
 
-[node name="Player" parent="." instance=ExtResource("3_jyhfs")]
-position = Vector2(0, 100)
+[node name="Player" parent="." instance=ExtResource("2_player")]
+position = Vector2(0, -35)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Title" type="Label" parent="HUD"]
+offset_left = 22.0
+offset_top = 14.0
+offset_right = 600.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0.86, 0.96, 0.82, 1)
+theme_override_font_sizes/font_size = 24
+text = "EL BOSQUE DEL DRAGÓN"
+
+[node name="Score" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 56.0
+offset_right = 280.0
+offset_bottom = 84.0
+theme_override_colors/font_color = Color(1, 0.91, 0.65, 1)
+theme_override_font_sizes/font_size = 20
+text = "Árboles: 0 / 3"
+
+[node name="Timer" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 88.0
+offset_right = 280.0
+offset_bottom = 114.0
+theme_override_colors/font_color = Color(0.88, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 18
+text = "Tiempo: 60"
+
+[node name="Distance" type="Label" parent="HUD"]
+offset_left = 824.0
+offset_top = 24.0
+offset_right = 1128.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(0.75, 0.9, 0.82, 1)
+theme_override_font_sizes/font_size = 16
+horizontal_alignment = 2
+text = "Distancia al árbol: --"
+
+[node name="Status" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 554.0
+offset_right = 1128.0
+offset_bottom = 586.0
+theme_override_colors/font_color = Color(0.9, 0.96, 0.89, 1)
+theme_override_font_sizes/font_size = 18
+text = "¡Reúne tres árboles antes de que termine el tiempo!"
+
+[node name="Prompt" type="Label" parent="HUD"]
+offset_left = 24.0
+offset_top = 592.0
+offset_right = 1128.0
+offset_bottom = 626.0
+theme_override_colors/font_color = Color(1, 0.91, 0.65, 1)
+theme_override_font_sizes/font_size = 18
+text = "Acércate a un árbol (92 px) y pulsa E"

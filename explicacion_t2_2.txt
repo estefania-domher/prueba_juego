@@ -1,31 +1,30 @@
-EXPLICACIÓN DE LA PRÁCTICA T2.2
+EXPLICACIÓN DEL PROTOTIPO: EL BOSQUE DEL DRAGÓN
 
-Scripts del proyecto
+MECÁNICA
+El dragón debe recoger tres árboles antes de que se agote un minuto. Se mueve con las flechas. Al pulsar E, Main calcula cuál es el árbol más cercano y solo permite recogerlo si está a 92 píxeles o menos. El marcador y la distancia aparecen en pantalla. Recoger los tres árboles gana; terminar el tiempo pierde.
 
-1. scripts/dragon.gd (Player)
-Este script controla al personaje Player, que es una escena reutilizable instanciada dentro de Main.
-Lee las acciones move_left y move_right y mueve al personaje horizontalmente.
-Al pulsar E (acción interact), Player emite la señal interact_requested.
-También define stop_player(), que desactiva el movimiento y pone la velocidad a cero.
+SCRIPTS
 
-2. scripts/main.gd (Main)
-Este script coordina la escena principal.
-Al iniciar, conecta la señal interact_requested de Player con el método _on_player_interact_requested().
-Por tanto, Player es quien emite la señal y Main quien la recibe. Al recibirla, Main escribe un mensaje en la consola.
-También conecta la señal timeout de RoundTimer con _on_round_timer_timeout().
-Cuando termina el temporizador, Main recibe timeout y llama a player.stop_player() para detener el personaje.
+scripts/dragon.gd (Player)
+Controla al dragón con CharacterBody2D y move_and_slide(). Input.get_vector obtiene la dirección de las cuatro flechas. lerp_angle gira el dragón gradualmente hacia la dirección de vuelo. Si se pulsa E, Player emite interact_requested. stop_player() desactiva el movimiento.
 
-Resumen de señales
+scripts/main.gd (Main)
+Coordina la partida, el temporizador, la puntuación y la interfaz. Recibe interact_requested y calcula la distancia con Vector2.distance_to. Si se cumple el alcance, llama a collect() en el árbol más cercano. También recibe RoundTimer.timeout y finaliza la ronda, deteniendo al jugador.
 
-interact_requested:
-- Emisor: Player (scripts/dragon.gd), al pulsar E.
-- Receptor: Main (scripts/main.gd), método _on_player_interact_requested().
-- Resultado: mensaje de confirmación en la consola.
+scripts/arbol.gd (Arbol)
+Hace que el árbol se mueva suavemente usando seno y move_toward. Cuando Main llama a collect(), el árbol emite collected.
 
-timeout:
-- Emisor: RoundTimer, al finalizar sus diez segundos.
-- Receptor: Main (scripts/main.gd), método _on_round_timer_timeout().
-- Resultado: Main llama a stop_player() y el personaje deja de moverse.
+SEÑALES Y ORDEN
 
-Prueba observada en Godot
-La ejecución mostró el movimiento del personaje, el mensaje de interact_requested al pulsar E y el mensaje de RoundTimer al finalizar. Después de finalizar el temporizador, el personaje quedó detenido.
+1. Player emite interact_requested al pulsar E.
+2. Main recibe interact_requested, comprueba la distancia y selecciona el árbol más cercano.
+3. Main llama a collect() en el árbol seleccionado.
+4. Arbol emite collected y Main recibe esa señal, actualiza la puntuación y elimina el árbol.
+5. RoundTimer emite timeout al pasar 60 segundos; Main recibe la señal y detiene al jugador.
+6. Si se recogen tres árboles antes del timeout, Main declara victoria y para el temporizador.
+
+MATEMÁTICAS Y DEPURACIÓN
+distance_to mide la distancia en píxeles para aplicar el alcance de interacción. lerp_angle interpola la rotación del dragón. move_toward junto con sin produce un vaivén suave del árbol. El HUD muestra la distancia objetivo para inspeccionar la regla. Se corrigió el controlador que intentaba mover un Sprite2D con move_and_slide: ahora Player hereda de CharacterBody2D.
+
+PRUEBAS
+La validación headless en Godot 4.7.2 pasó: carga de Main, movimiento a la izquierda, señal de recogida y parada al acabar un temporizador corto de prueba. La exportación Windows queda pendiente porque faltan las plantillas de exportación de Godot 4.7.2. Ver docs/pruebas.md.
