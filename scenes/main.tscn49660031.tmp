@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://caur8xau1pi4"]
+
+[ext_resource type="Texture2D" uid="uid://btugli4k7y8fw" path="res://assets/sprites/BODY_skeleton.png" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://7uk8iq1c4kdf" path="res://scripts/main.gd" id="2_sugp2"]
+[ext_resource type="PackedScene" uid="uid://ciomhu3lrqprs" path="res://scenes/dragon.tscn" id="3_jyhfs"]
+
+[node name="Main" type="Node2D" unique_id=602717988]
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=221671436]
+
+[node name="Sprite2D" type="Sprite2D" parent="Camera2D" unique_id=205168781]
+texture = ExtResource("1_o5qli")
+hframes = 9
+vframes = 4
+frame = 22
+script = ExtResource("2_sugp2")
+
+[node name="Node2D" parent="." unique_id=1739444563 instance=ExtResource("3_jyhfs")]
+
+[node name="RoundTimer" type="Timer" parent="." unique_id=922207292]
+wait_time = 10.0
+one_shot = true
+autostart = true
