@@ -1,0 +1,31 @@
+EXPLICACIÓN DE LA PRÁCTICA T2.2
+
+Scripts del proyecto
+
+1. scripts/dragon.gd (Player)
+Este script controla al personaje Player, que es una escena reutilizable instanciada dentro de Main.
+Lee las acciones move_left y move_right y mueve al personaje horizontalmente.
+Al pulsar E (acción interact), Player emite la señal interact_requested.
+También define stop_player(), que desactiva el movimiento y pone la velocidad a cero.
+
+2. scripts/main.gd (Main)
+Este script coordina la escena principal.
+Al iniciar, conecta la señal interact_requested de Player con el método _on_player_interact_requested().
+Por tanto, Player es quien emite la señal y Main quien la recibe. Al recibirla, Main escribe un mensaje en la consola.
+También conecta la señal timeout de RoundTimer con _on_round_timer_timeout().
+Cuando termina el temporizador, Main recibe timeout y llama a player.stop_player() para detener el personaje.
+
+Resumen de señales
+
+interact_requested:
+- Emisor: Player (scripts/dragon.gd), al pulsar E.
+- Receptor: Main (scripts/main.gd), método _on_player_interact_requested().
+- Resultado: mensaje de confirmación en la consola.
+
+timeout:
+- Emisor: RoundTimer, al finalizar sus diez segundos.
+- Receptor: Main (scripts/main.gd), método _on_round_timer_timeout().
+- Resultado: Main llama a stop_player() y el personaje deja de moverse.
+
+Prueba observada en Godot
+La ejecución mostró el movimiento del personaje, el mensaje de interact_requested al pulsar E y el mensaje de RoundTimer al finalizar. Después de finalizar el temporizador, el personaje quedó detenido.
