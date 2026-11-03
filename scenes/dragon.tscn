@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/dragon.png" id="1_sprite"]
+[ext_resource type="Script" path="res://scripts/dragon.gd" id="2_player"]
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("2_player")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_sprite")
+vframes = 2

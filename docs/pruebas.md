@@ -1,16 +1,22 @@
-# Registro de Pruebas de Build
- 
-## Informaci髇 del Entorno
-- **Motor:** Godot Engine 4.x
-- **Plataforma objetivo:** Windows Desktop
-- **Ruta de exportaci髇:** `build/prueba_juego.exe` (fuera del c骴igo fuente)
- 
-## Prueba Realizada
-- **Acci髇:** Ejecuci髇 aut髇oma del binario `prueba_juego.exe` con el editor de Godot cerrado.
-- **Resultado:** 蓌ito. La ventana del juego carga correctamente la escena principal `main.tscn` con los recursos gr醘icos y la c醡ara sin fallos.
- 
-## Reproducibilidad
-1. Clonar el repositorio desde GitHub.
-2. Abrir el proyecto en Godot Engine.
-3. Ir a Proyecto -> Exportar.
-4. Seleccionar el ajuste preestablecido Windows Desktop y pulsar en Exportar Proyecto a una carpeta externa `build/`.
+# Pruebas de T2.2
+
+## Alcance
+Se documentan las comprobaciones de la pr谩ctica: reutilizaci贸n de la escena Player desde Main, movimiento, se帽al de interacci贸n y fin de ronda con `RoundTimer`.
+
+## Pruebas realizadas
+
+| Comprobaci贸n | Resultado |
+|---|---|
+| Revisi贸n est谩tica de `project.godot`, scripts y escenas | Correcto: Main instancia `scenes/dragon.tscn` como `Player`; el script hereda de `CharacterBody2D` y usa `move_and_slide()`. |
+| Conexi贸n de `interact_requested` | Correcto en el c贸digo: Main conecta la se帽al del Player en `_ready()` con `_on_player_interact_requested()`. |
+| Fin de ronda | Correcto en el c贸digo: el temporizador de una sola ejecuci贸n llama a `stop_player()` al emitir `timeout`; el jugador deja de procesar movimiento. |
+| Ejecuci贸n dentro de Godot | No realizada: no se encontr贸 el ejecutable de Godot en las ubicaciones habituales ni en el `PATH` de este equipo. |
+
+## Pasos para verificaci贸n manual
+1. Abrir el proyecto en Godot y ejecutar la escena principal.
+2. Mantener pulsadas las flechas izquierda/derecha: el jugador debe moverse horizontalmente.
+3. Pulsar `E`: la consola debe mostrar `Main: se帽al interact_requested recibida.`
+4. Esperar diez segundos: la consola debe indicar el fin de `RoundTimer`; despu茅s, el jugador debe permanecer inm贸vil.
+
+## Notas
+`interact` est谩 asignada a `E` en el mapa de entrada. `RoundTimer` est谩 configurado como `one_shot` y `autostart`, con una duraci贸n de diez segundos. Estas pruebas de comportamiento est谩n descritas para verificaci贸n manual; no se afirma que hayan sido ejecutadas sin Godot disponible.
